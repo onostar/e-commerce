@@ -661,7 +661,7 @@
             }
 
             .wa_btn::after{
-                content: 'Send us a DM';
+                content: 'Send us a Message';
             }
         }
     </style>

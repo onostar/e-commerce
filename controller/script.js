@@ -433,8 +433,8 @@ function order(){
                 key: 'a345d8cf-7df8-4276-a59d-b4bf1d35e8e9',
                 email: email_address,
                 transactionref: transNum,
-                customer_logo: 'https://www.realcaresupermarket.com/images/logo.png',
-                 customer_service_channel: '+2347068897068, support@realcaresupermarket.com',
+                customer_logo: 'https://www.rivicos.com/images/logo.png',
+                 customer_service_channel: '+2347055220617, support@rivicos.com',
                  txn_charge: 3,
                  txn_charge_type: 'percentage',
                  onSuccess: function(response) { 

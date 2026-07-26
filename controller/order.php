@@ -67,7 +67,7 @@
                     $customer_mail = $detail->email;
                 }
                 /* get restaurant */
-                $get_company = $connectdb->prepare("SELECT users.user_id, users.company_email, users.company_name, orders.company, orders.customer FROM users, orders WHERE orders.customer = :customer AND users.user_id = orders.company");
+                $get_company = $connectdb->prepare("SELECT users.company_email, users.company_name FROM orders INNER JOIN users ON users.user_id = orders.company WHERE orders.customer=:customer LIMIT 1");
                 $get_company->bindvalue('customer', $customer);
                 $get_company->execute();
                 $shows = $get_company->fetchAll();
@@ -83,21 +83,21 @@
                 $mail->SMTPAuth = true; 
         
                 $mail->SMTPSecure = 'ssl'; 
-                $mail->Host = 'www.realcaresupermarket.com';
+                $mail->Host = 'premium355.web-hosting.com';
                 $mail->Port = 465; 
-                $mail->Username = 'orders@realcaresupermarket.com';
-                $mail->Password = 'r3al@Care!234';   
+                $mail->Username = 'orders@rivicos.com';
+                $mail->Password = 'yMcmb@her0123!';   
         
         
                 $mail->IsHTML(true);
-                $mail->From="orders@realcaresupermarket.com";
+                $mail->From="orders@rivicos.com";
                 $mail->FromName=$from_name;
                 $mail->Sender=$from;
                 $mail->AddReplyTo($from, $from_name);
                 $mail->Subject = $subject;
                 $mail->Body = $body;
                 $mail->AddAddress($to);
-                $mail->AddAddress('onostarmedia@gmail.com');
+                $mail->addBCC('onostarmedia@gmail.com');
                 
                 if(!$mail->Send())
                 {
@@ -117,12 +117,12 @@
                
             }
             
-            $to   = 'realcaresupermarket@gmail.com';
-            $from = 'orders@realcaresupermarket.com';
-            $from_name = "Realcare Pharmacy & Supermarket";
-            $name = 'Realcare Online Store';
+            $to   = 'rivicos@gmail.com';
+            $from = 'orders@rivicos.com';
+            $from_name = "Rivicos SUpermarket & Pharmacy";
+            $name = 'Rivicos Online Store';
             $subj = 'New order from '.$customer_name;
-            $msg = "<p>You have a new order from $customer_name </p><br> <a href='https://realcaresupermarket.com/admin'>Click</a> to review and deliver order";
+            $msg = "<p>You have a new order from $customer_name </p><br> <a href='https://rivicos.com/login_page.php'>Click</a> to review and deliver order";
             
             $error=smtpmailer($to, $from, $name ,$subj, $msg);
              $_SESSION['success'] = "Your order was placed successfully. Thank you!";
