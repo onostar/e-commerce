@@ -1,0 +1,91 @@
+<?php
+    require "../controller/server.php";
+    session_start();
+    $_SESSION['current_page'] = $_SERVER['REQUEST_URI'];
+    if(isset($_SESSION['user'])){
+        $user = $_SESSION['user'];
+        $user_info = $connectdb->prepare("SELECT * FROM shoppers WHERE email = :email");
+        $user_info->bindvalue('email', $user);
+        $user_info->execute();
+        $views = $user_info->fetchAll();
+        foreach($views as $view){
+            $full_name = $view->first_name. " ". $view->last_name;
+            $id = $view->user_id;
+        }
+        $title = $full_name. " - Help center";
+    }else{
+        $title =  " | Help center";
+    }
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<?php
+            include "../head.php";
+        ?>
+    <link rel="stylesheet" href="../fontawesome-free-5.15.1-web/css/all.css">
+    <link rel="icon" type="image/png" href="../images/logo.png" size="32X32">
+    <link rel="stylesheet" href="../controller/style.css">
+    
+</head>
+<body>
+    <?php include "header.php";?>
+
+    <?php include "mobile_menu.php";?>
+
+    <main>
+        <section id="helpNotes">
+            <figure class="help_banner">
+                <div class="help_img">
+                    <img src="../images/order_cancel.jpg" alt="order & track banner">
+                </div>
+                <figcaption>
+                    <h2>How & When to cancel orders</h2>
+                    <i class="fas fa-truck-moving"></i>
+                <figcaption>
+            </figure>
+            <div class="all_helps">
+                <div class="help_links">
+                    <p class="help_link active_help" data-page="placeOrder">Order Cancellation</p>
+                    <p class="help_link" data-page="trackOrder">How to cancel orders</p>
+                    
+                </div>
+                <div class="help_details" id="placeOrder">
+                    <div class="place_order_tips">
+                        <div class="tips_img">
+                            <img src="../images/cancel2.jpg" alt="order tips">
+                        </div>
+                        <div class="order_tips">
+                            <p>An order can conly be cancelled if it has not been shipped by the seller. Once shipped, Cancellation option will be removed</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="help_details" id="trackOrder">
+                    <div class="place_order_tips">
+                        <div class="tips_img">
+                            <img src="../images/cancel2.jpg" alt="order tips">
+                        </div>
+                        <div class="order_tips">
+                            <p>To cancel an order, pls follow theses steps below:</p>
+                            <ol>
+                                <li>From your account, click on <strong>my orders</strong></li>
+                                <li>Click on show details on the order you wish to Cancel</li>
+                                <li>Click on cancel order button to cancel the shipping of that order</li>
+                                
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </section>
+        
+    </main>
+    <?php include "footer.php"?>
+    <script src="../controller/jquery.js"></script>
+    <script src="../controller/script.js"></script>
+    
+</body>
+</html>

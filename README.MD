@@ -1,0 +1,3 @@
+Realcare is an online platform made for the purpose of ordering fashion wears, men and women clothing, bed sheets, jewellries, etc from all kinds of retailers and wholesalers in Nigeria and Abroad from whereever you are through your mobile phone, tablet or pc.
+With a database for different store owners to add their items and monitor their sales.
+All store ownere=s have their store on clozeth showing only thier products and a live chat system
