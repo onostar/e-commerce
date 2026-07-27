@@ -1741,13 +1741,17 @@ function confirmDelivery(order){
         $.ajax({
             type : "GET",
             url : "../controller/confirm_delivery.php?order="+order,
+            beforeSend : function(){
+                $("#deliveries").html("<div class='processing'><div class='loader'></div></div>");
+            },
             success : function(response){
                 $("#deliveries").html(response);
+                setTimeout(function(){
+                    showPage("confirm_delivery.php");
+                }, 2000)
             }
         })
-        setTimeout(function(){
-            $("#deliveries").load("confirm_delivery.php #deliveries");
-        }, 1000)
+        
         return false;
     }
 }

@@ -899,7 +899,8 @@ main{
 }
 .all_items figure p:first-child{
     font-weight: bold;
-    color:var(--primaryColor);
+    /* color:var(--primaryColor); */
+    font-weight: normal;
 }
 /* .todo .first{
     color:var(--secondaryColor);
@@ -1542,12 +1543,14 @@ main{
     }
 }
 #all_items h2, #recommendedItems h2, #popular h2{
-    background:var(--primaryColor);
+    background:var(--buttonColor);
     display: inline-block;
     width:auto;
     color:#fff;
     padding:5px 10px;
     text-transform: capitalize;
+    font-size:.8rem;
+    border-radius: 5px 5px 0 0 ;
 }
 .all_items{
     display:flex;
@@ -1585,7 +1588,7 @@ main{
     height:auto;
 } */
 .all_items figcaption span{
-    color:var(--secondaryColor);
+    color:#222;
 }
 /* daily deals */
 #daily_deals{
@@ -3585,7 +3588,7 @@ color: rgb(231, 226, 226);
     }
     #all_items h2, #recommendedItems h2, #popular h2{
         text-align:center;
-        font-size:1.1rem;
+        font-size:.9rem;
     }
     #main_footer .section{
         width:90%;

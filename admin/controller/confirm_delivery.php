@@ -38,11 +38,12 @@
             $names = $get_name->fetchAll();
             foreach($names as $name){
                 $full_name = $name->first_name . " " . $name->last_name;
-                $email = $name->email;
+                $customer_email = $name->email;
             }
             //send notification and email to customer
-            $subject = "Item Delivered";
-            $details = "Hello $full_name, this is to confirm that your order '$item_name', with order number: $order_id has been delivered to your address. \n Thanks for your business. Do Shop more with Us";
+            $subject = "Order Delivered";
+
+            $details = "Hello $full_name, we're pleased to confirm that your order '$item_name' (Order No: $order_id) has been successfully delivered. Thank you for shopping with Rivicos Pharmacy & Supermarket. We hope you enjoy your purchase and look forward to serving you again.";
             // $mailHeader = "FROM: Admin";
             
             //send notification
@@ -59,21 +60,21 @@
                 $mail->SMTPAuth = true; 
         
                 $mail->SMTPSecure = 'ssl'; 
-                $mail->Host = 'www.realcarepharmacy.com';
+                $mail->Host = 'premium355.web-hosting.com';
                 $mail->Port = 465; 
-                $mail->Username = 'orders@realcarepharmacy.com';
+                $mail->Username = 'orders@rivicos.com';
                 $mail->Password = 'yMcmb@her0123!';   
         
         
                 $mail->IsHTML(true);
-                $mail->From="orders@realcarepharmacy.com";
+                $mail->From="orders@rivicos.com";
                 $mail->FromName=$from_name;
                 $mail->Sender=$from;
                 $mail->AddReplyTo($from, $from_name);
                 $mail->Subject = $subject;
                 $mail->Body = $body;
                 $mail->AddAddress($to);
-                $mail->AddAddress('onostarkels@gmail.com');
+                // $mail->AddAddress('onostarkels@gmail.com');
                 
                 if(!$mail->Send())
                 {
@@ -84,22 +85,244 @@
                 {
                     
                     /* success message */
-                    $error = "<div class='success'><p>Order cancelled! <i class='fas fa-thumbs-up'></i></p></div>";
+                    $error = "<div class='success'><p>Order Delivered! <i class='fas fa-thumbs-up'></i></p></div>";
                     // header("Location: index.html");
                     return $error;
                 }
             }
             
-            $to   = $email;
-            $from = 'orders@realcarepharmacy.com';
-            $from_name = "Realcare";
-            $name = 'Realcare order delivery';
-            $subj = "$item_name delivered";
-            $msg = "<p>Hello $full_name, this is to confirm that your order '$item_name', with order number: $order_id has been delivered to your address. \n Thanks for your business. Do Shop more with Us<br></p>";
+            $to   = $customer_email;
+            $from = 'orders@rivicos.com';
+            $from_name = "Rivicos";
+            $name = 'Rivicos order delivery';
+            $subj = "✅ Delivery Confirmed - Order ".$order_id;
+
+            $msg='
+            <div style="
+            max-width:700px;
+            margin:auto;
+            font-family:Arial,Helvetica,sans-serif;
+            background:#ffffff;
+            border:1px solid #EAEAEA;
+            border-radius:15px;
+            overflow:hidden;">
+
+            <!-- HEADER -->
+
+            <div style="
+            background:linear-gradient(135deg,#28A745,#1674D5);
+            padding:35px;
+            text-align:center;
+            color:#fff;">
+
+            <img src="https://rivicos.com/images/logo.png"
+            style="height:60px;margin-bottom:15px;">
+
+            <h2 style="margin:0;">
+
+            Your Order Has Been Delivered
+
+            </h2>
+
+            <p style="
+            margin-top:10px;
+            font-size:16px;
+            line-height:1.7;">
+
+            Thank you for shopping with Rivicos Pharmacy & Supermarket.
+
+            </p>
+
+            </div>
+
+            <!-- BODY -->
+
+            <div style="padding:35px;">
+
+            <p style="font-size:16px;">
+
+            Hello <strong>'.$full_name.'</strong>,
+
+            </p>
+
+            <p style="
+            line-height:1.9;
+            color:#555;">
+
+            We are delighted to let you know that your order has been successfully delivered.
+
+            We hope everything arrived in excellent condition and meets your expectations.
+
+            </p>
+
+            <table
+            width="100%"
+            cellpadding="12"
+            style="
+            margin:25px 0;
+            border-collapse:collapse;
+            background:#F8FAFD;
+            border-radius:10px;">
+
+            <tr>
+
+            <td width="35%">
+
+            <strong>Order Number</strong>
+
+            </td>
+
+            <td>
+
+            '.$order_id.'
+
+            </td>
+
+            </tr>
+
+            <tr>
+
+            <td>
+
+            <strong>Delivered Item</strong>
+
+            </td>
+
+            <td>
+
+            '.$item_name.'
+
+            </td>
+
+            </tr>
+
+            <tr>
+
+            <td>
+
+            <strong>Status</strong>
+
+            </td>
+
+            <td style="
+            color:#28A745;
+            font-weight:bold;">
+
+            Delivered Successfully
+
+            </td>
+
+            </tr>
+
+            </table>
+
+            <div style="
+            background:#F5FBFF;
+            padding:20px;
+            border-left:4px solid #1674D5;
+            border-radius:10px;
+            margin-top:25px;">
+
+            <h3 style="margin-top:0;">
+
+            We Value Your Feedback
+
+            </h3>
+
+            <p style="
+            margin:0;
+            line-height:1.8;
+            color:#555;">
+
+            Your opinion helps us improve.
+
+            If you are satisfied with your experience, we would love to hear your feedback. If anything wasnt quite right, please let us know so we can make it right.
+
+            </p>
+
+            </div>
+
+            <div style="
+            margin-top:30px;
+            padding:20px;
+            background:#F9FFF5;
+            border-radius:10px;">
+
+            <h3 style="margin-top:0;">
+
+            Need Further Assistance?
+
+            </h3>
+
+            <p style="
+            margin:0;
+            line-height:1.8;
+            color:#555;">
+
+            If you have any questions regarding this order or need assistance with another purchase, our support team is always ready to help.
+
+            </p>
+
+            </div>
+
+            <p style="
+            margin-top:30px;
+            line-height:1.9;
+            color:#555;">
+
+            Thank you once again for choosing <strong>Rivicos Pharmacy & Supermarket</strong>.
+
+            We truly appreciate your trust and look forward to serving you again soon.
+
+            </p>
+
+            <div style="
+            margin-top:35px;
+            padding:20px;
+            background:#F8F9FA;
+            text-align:center;
+            border-radius:10px;">
+
+            <strong>Customer Support</strong>
+
+            <br><br>
+
+            📞 +234 705 522 0617
+
+            <br>
+
+            ✉ support@rivicos.com
+
+            <br>
+
+            🌐 https://rivicos.com
+
+            </div>
+
+            <hr style="
+            margin:35px 0;
+            border:none;
+            border-top:1px solid #eee;">
+
+            <p style="
+            font-size:12px;
+            color:#888;
+            text-align:center;">
+
+            This email was automatically generated by the Rivicos Order Management System.
+
+            </p>
+
+            </div>
+
+            </div>
+
+            ';
             
             $error=smtpmailer($to, $from, $name ,$subj, $msg);
+            echo "<div class='success'><p>Order Delivered! <i class='fas fa-thumbs-up'></i></p></div>";
         }else{
-            $_SESSION['error'] = "failed to dispense";
-            header("Location: ../views/admin.php");
+            echo "failed to deliver";
+            // header("Location: ../views/admin.php");
         }
     }
