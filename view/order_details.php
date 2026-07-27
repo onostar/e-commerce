@@ -467,12 +467,10 @@
                 <li><i class="fas fa-check"></i>Order Placed on <?php echo date("jS M, Y", strtotime($item->order_date));?></li>
                 <li><i class="fas fa-check"></i>Order Processing</li>
                 <li><?php
-                    if($item->order_status == 1){
+                    if($item->order_status == 1 || $item->order_status == 2){
                         echo "<i class='fas fa-check'></i>Order Shipped for delivery on ".date("jS M, Y", strtotime($item->dispense_date));
-                    }elseif($item->order_status == -1){
-                        echo "<span>Order Shipped for delivery <i class='fas fa-ban'></i></span>";
                     }else{
-                        echo "<span>Order Shipped for delivery <i class='fas fa-spinner'></i></span>";
+                        echo "<span>Order Shipped for delivery <i class='fas fa-ban'></i></span>";
                     }
                 ?></li>
                 <li><?php

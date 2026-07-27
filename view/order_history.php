@@ -63,7 +63,7 @@
                 ?>
 
                 <figure>
-                    <a href="javascript:void(0)" title="View Order details" onclick="viewOrder('<?php echo $row->order_id?>')"><img src="<?php echo '../items/'.$row->item_foto?>" alt="my order" loading="lazy"></a>
+                    <a href="order_details.php?order=<?php echo $row->order_id?>" title="View Order details"><img src="<?php echo '../items/'.$row->item_foto?>" alt="my order" loading="lazy"></a>
                     <figcaption>
                         <div class="order_details">
                             <h4>Order#: <?php echo $row->order_number;?></h4>

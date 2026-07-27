@@ -105,7 +105,11 @@
             $msg = "<p>You have a review for $item_name from $full_name<br><br> <a style='background:green;padding:10px; color:#fff' href='https://rivicos.com/view/item_info.php?item=$item'>View</a></p>";          
             $error=smtpmailer($to, $from, $name ,$subj, $msg);
             }
-            
+            echo "<script>
+            alert('Thanks for your review. Do shop more with us');
+            window.open('../view/item_info.php?item=$item')
+            </script>";
+            // header("Location: ../view/item_info.php?tem=$item");
         }
     }
 
