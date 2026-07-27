@@ -1,5 +1,6 @@
 <?php
     require "../controller/server.php";
+    include "../admin/views/cache_control.php";
     session_start();
     $_SESSION['current_page'] = $_SERVER['REQUEST_URI'];
 
@@ -25,7 +26,7 @@
     <link rel="stylesheet" href="../fontawesome-free-5.15.1-web/css/all.css">
     <link rel="stylesheet" href="../fontawesome-free-6.0.0-web/css/all.css">
     <link rel="icon" type="image/png" href="../images/logo.png" size="32X32">
-    <link rel="stylesheet" href="../controller/style.css">
+    <link rel="stylesheet" href="../controller/style.css?v=<?php echo APP_VERSION?>">
     
 </head>
 <body>
@@ -84,15 +85,15 @@
                                     }elseif($order_status == 1){
                                         echo "<p style='background:hsl(180, 81%, 24%, .8);'>On transit <i class='fas fa-plane'></i></p>";
                                     }else{
-                                        echo "<p style='background:hsla(202, 81%, 22%, .9);'>Processing <i class='fas fa-spinner'></i></p>";
+                                        echo "<p style='background:var(--buttonColor);'>Processing <i class='fas fa-spinner'></i></p>";
                                 ?>
-                                    <a style="border-radius:10px;"class="cancel_order" id="showHistory" href="javascript:void(0);" title="Cancel Order" onclick="cancelOrder('<?php echo $row->order_id?>')">Cancel Order <i class="fas fa-plane-slash"></i></a>
+                                    <a style="border-radius:15px; box-shadow:1px 1px 1px #222; border:1px solid #fff; margin-left:4px;"class="cancel_order" id="showHistory" href="javascript:void(0);" title="Cancel Order" onclick="cancelOrder('<?php echo $row->order_id?>')">Cancel Order <i class="fas fa-plane-slash"></i></a>
                                 <?php }?>
                             </div>
                         </div>
-                        <div class="status_order">
+                        <!-- <div class="status_order">
                             <a href="javascript:void(0)" title="View Order details" onclick="viewOrder('<?php echo $row->order_id?>')">Show details <i class="fas fa-eye"></i></a>
-                        </div>
+                        </div> -->
                     </figcaption>
                 </figure>
                 <?php

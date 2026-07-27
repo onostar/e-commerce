@@ -355,7 +355,7 @@ function togglePassword(){
 
 /* view order details */
 function viewOrder(order){
-    window.open("../view/order_details.php?order="+order, "_parent");
+    window.open("order_details.php?order="+order, "_parent");
     return;
 }
 /* view order details */

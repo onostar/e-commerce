@@ -1462,11 +1462,11 @@ main{
         transform: scale(1.1);
     }
 }
-#itemContent .itemInfo figure figcaption #track, #itemContent .itemInfo figure figcaption .cancel_order{
+/* #itemContent .itemInfo figure figcaption #track, #itemContent .itemInfo figure figcaption .cancel_order{
     padding:10px 20px;
     background:var(--secondaryColor);
     color:#fff;
-    /* margin:10px; */
+    margin:10px;
     display:inline-block;
 }
 #itemContent .itemInfo figure figcaption .cancel_order{
@@ -1493,7 +1493,7 @@ main{
 #itemContent .itemInfo .item_descriptions p{
     color:rgba(66, 65, 65, .8);
     padding:5px;
-}
+} */
 .review_form{
     width:60%;
     margin:20px auto;
@@ -1963,12 +1963,18 @@ main{
     background:#fff;
     padding:10px;
 }
+#history .order_history{
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+}
 #history .order_history figure{
     display:flex;
     border-bottom:1px solid rgb(207, 200, 200);
     margin:20px 0;
-    width:100%;
+    width:48%;
     padding:5px;
+    box-shadow:1px 1px 1px #cdcdcd;
 }
 #history .order_history figure img{
     width:200px;
@@ -1983,26 +1989,38 @@ main{
     align-items: flex-start;
 }
 #history .order_history figure figcaption .order_details{
-    padding:2px;
+    padding:10px;
     color:rgba(54, 53, 53, 0.8);
     font-size:.8rem;
 }
+#history .order_history figure figcaption .order_details h4{
+    color:#424141;
+    padding:2px 0;
+}
 #history .order_history figure figcaption .order_details #name{
     color:chocolate;
+    
+    
 }
 #history .order_history figure figcaption .status_order{
     
     color:#fff;
     font-size:.9rem;
 }
-
+#history .order_history figure figcaption .order_details p{
+    padding:2px 0;
+}
 #history .order_history figure figcaption #status_flex{
     display:flex;
+   
 }
 #history .order_history figure figcaption .status_order p{
     padding:5px;
-    border-radius: 10px;
+    border-radius: 15px;
     width:auto!important;
+    border:1px solid #fff;
+    box-shadow:1px 1px 1px #222;
+    font-size:.85rem;
     
 }
 #history .order_history figure figcaption .status_order #showHistory{
@@ -3336,6 +3354,9 @@ color: rgb(231, 226, 226);
     }
     #history .order_history{
         padding:5px;
+    }
+    #history .order_history figure{
+        width:100%;
     }
     #history .order_history figure img{
         width:150px;
