@@ -426,7 +426,7 @@ function order(){
     }else{
         let order = confirm("Are you sure you want to confirm this order?", "");
         if(order){
-            const options = {
+           /*  const options = {
                 amount: total_amount,
                 currency: 'NGN',
                 domain: 'live',
@@ -437,19 +437,19 @@ function order(){
                  customer_service_channel: '+2347055220617, support@rivicos.com',
                  txn_charge: 3,
                  txn_charge_type: 'percentage',
-                 onSuccess: function(response) { 
+                 onSuccess: function(response) {  */
                     $.ajax({
                         type: "POST",
                         url: "../controller/order.php",
                         data: {customer:customer, address:address, delivery_option:delivery_option, total_amount:total_amount, email_address:email_address, transNum:transNum},
-                       /*  success : function(response){
+                        success : function(response){
                             $("#shoppingCart").html(response);
-                        } */
+                        }
                     })
                     alert('Payment Successful!', response.message);
-                    window.open("../view/users.php", "_parent");
+                    // window.open("../view/users.php", "_parent");
                      return;
-                 },
+                 /* },
                 onExit: function(response) {    console.log('Hello World!',
             response.message); }
             }
@@ -457,7 +457,7 @@ function order(){
             if(window.VPayDropin){
                 const {open, exit} = VPayDropin.create(options);
                 open();                    
-            }
+            } */
         }else{
             return
         }

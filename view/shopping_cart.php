@@ -548,34 +548,7 @@
         input.dispatchEvent(new Event('input', { bubbles: true }));
     }
 </script>
-        <!-- <section id="featured">
-            
-            <h2>Featured cuisines</h2>
-            <div class="featured">
-                <?php
-                    /* $select_featured = $connectdb->prepare("SELECT * FROM menu WHERE featured_item = 1");
-                    $select_featured->execute();
-                    $rows = $select_featured->fetchAll();
-                    foreach($rows as $row): */
-                ?>
-                <figure>
-                    <a href="javascript:void(0);" onclick="showItems('<?php echo $row->item_id?>')">
-                        <img src="<?php echo 'items/'.$row->item_foto;?>" alt="featured item">
-                        <figcaption>
-                            <p><?php echo $row->item_name?></p>
-                            <span>₦ <?php echo $row->item_prize?></span>
-                        </figcaption>
-                    </a>
-                </figure>
-                
-                <?php //endforeach ?>
-            </div>
-            <button id="view_more">View more</button>
-            <button id="show_less">Show less</button>
-        </section>
-        <section id="shop" class="row">
-            
-        </section> -->
+        
         
     </main>
     <footer>
