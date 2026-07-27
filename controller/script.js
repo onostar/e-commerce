@@ -7,7 +7,12 @@ window.onscroll = function(){
 /* show order details */
 $(document).ready(function(){
     $("#track").click(function(){
+        page = document.getElementById("trackItem");
         $("#trackItem").toggle();
+
+        if(page.display = "none"){
+            page.scrollIntoView();
+        }
         // alert("work");
     })
 })

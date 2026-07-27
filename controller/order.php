@@ -2,6 +2,8 @@
     include "server.php";
     date_default_timezone_set("Africa/Lagos");
     session_start();
+    if(isset($_SESSION['user'])){
+
     require "../PHPMailer/PHPMailerAutoload.php";
     require "../PHPMailer/class.phpmailer.php";
     require "../PHPMailer/class.smtp.php";
@@ -21,7 +23,7 @@
             $random_num = random_int(0, 3);
             $ran_num .= $random_num;
         } */
-        $order_num = "RC0".$transNum;
+        $order_num = "RIV".$transNum;
         //get orders from cart
         $get_orders = $connectdb->prepare("SELECT * FROM cart WHERE customer = :customer");
         $get_orders->bindValue("customer", $customer);
@@ -47,6 +49,7 @@
                 $confirm_order->execute();
             }
             if($confirm_order){
+                $whatsappItems = "";
                 $orderItems='<table width="100%" cellpadding="12"
                 style="border-collapse:collapse;">
 
@@ -89,9 +92,14 @@
                 </tr>
 
                 ';
-
+                /* for whatsapp */
+                $whatsappItems .=
+                    "- ".$product->item_name.
+                    " x".$row->quantity.
+                    " (₦".number_format($row->item_price*$row->quantity).")\n";
                 }
                 $orderItems.='</table>';
+                
                 //delete from cart
                 $delete_cart = $connectdb->prepare("DELETE FROM cart WHERE customer = :customer");
                 $delete_cart->bindvalue('customer', $customer);
@@ -137,7 +145,7 @@
                 $mail->Subject = $subject;
                 $mail->Body = $body;
                 $mail->AddAddress($to);
-                $mail->addBCC('onostarmedia@gmail.com');
+                // $mail->addBCC('onostarmedia@gmail.com');
                 
                 if(!$mail->Send())
                 {
@@ -469,6 +477,72 @@
                 $customerSubject,
                 $customerMessage
             );
+            /*--------------------------------------------------------------------------
+            | WHATSAPP AUTO SEND
+            |--------------------------------------------------------------------------
+            */
+
+            // CLIENT PHONE NUMBER
+            $phone = '07055220617';
+
+            // REMOVE LEADING 0
+            $phone = ltrim($phone, '0');
+
+            // ADD COUNTRY CODE
+            $phone = '234' . $phone;
+
+            /*
+            |--------------------------------------------------------------------------
+            | WHATSAPP API
+            |--------------------------------------------------------------------------
+            */
+            $whatsappMessage =
+            "🛒 *NEW ORDER RECEIVED*
+
+            Order: ".$order_num."
+
+            Customer: ".$customer_name."
+
+            ".$whatsappItems."
+
+            Total: ₦".number_format($total_amount)."
+
+            Delivery: ".$options."
+
+            Address:
+            ".$address."
+
+            Please process immediately.";
+
+            $url = "https://api.ultramsg.com/instance178131/messages/chat";
+
+            $token = "acf3m9ykahur0fih";
+
+            $postData = array(
+                'token' => $token,
+                'to' => $phone,
+                'body' => $whatsappMessage
+            );
+
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($ch);
+            $response_data = json_decode($response, true);
+
+            /* if(isset($response_data['sent']) && $response_data['sent'] == 'true'){
+
+                $wa_status = "Sent";
+
+            }else{
+
+                $wa_status = "Failed";
+            } */
+            curl_close($ch);
            /*  $error=smtpmailer($to, $from, $name ,$subj, $msg); */
              $_SESSION['success'] = "Your order was placed successfully. Thank you!";
                 header("Location: ../view/shopping_cart.php");
@@ -480,5 +554,7 @@
         }
         
         
-    // }
+    }else{
+        header("Location: ../login_page.php?item=Please login to continue");
+    }
 ?>

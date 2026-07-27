@@ -40,6 +40,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
 <section id="itemContent">
 
     <style>
@@ -86,21 +90,84 @@
             margin: 0 0 16px;
         }
 
-        /* ---------- Product image card ---------- */
+        /* ---------- Product image slider ---------- */
         .item_pics{
+            position: relative;
             background: var(--surface);
             border-radius: 18px;
             box-shadow: 0 4px 18px rgba(18,32,58,.06);
             padding: 16px;
+        }
+
+        .slide_foto{
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-tint), #ffffff);
+            aspect-ratio: 4 / 3;
+            max-height: 220px;
+        }
+
+        .slide_foto img{
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity .35s ease;
+        }
+
+        .slide_foto img.active{
+            opacity: 1;
+        }
+
+        .arrows{
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            right: 8px;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            margin-top: -8px;
+        }
+
+        .arrows a{
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.92);
+            color: var(--ink);
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
+            font-size: .8rem;
+            box-shadow: 0 3px 10px rgba(18,32,58,.15);
         }
 
-        .item_pics img{
-            width: 100%;
-            max-height: 220px;
-            object-fit: contain;
+        .dot_row{
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .dot_row button{
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            border: none;
+            background: #d3ddec;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .dot_row button.active{
+            width: 20px;
+            border-radius: 999px;
+            background: var(--gradient);
         }
 
         /* ---------- Order info card ---------- */
@@ -125,8 +192,7 @@
 
         figcaption > p{
             display: flex;
-            justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
             margin: 0;
             padding: 9px 0;
             border-bottom: 1px solid var(--line);
@@ -140,6 +206,8 @@
         figcaption > p span{
             color: var(--muted);
             font-weight: 600;
+            min-width: 118px;
+            flex-shrink: 0;
         }
 
         figcaption > p:nth-of-type(5){
@@ -302,7 +370,7 @@
                 top: 24px;
             }
 
-            .item_pics img{
+            .slide_foto{
                 max-height: 280px;
             }
 
@@ -330,7 +398,7 @@
                 $order_id = $_GET['order'];
 
 
-                $view_item = $connectdb->prepare("SELECT orders.customer, orders.item_id, orders.quantity, orders.item_price, orders.company, orders.order_date, orders.order_number, orders.order_status, orders.delivery_date, orders.order_id, orders.dispense_date, menu.item_name, menu.item_foto, menu.payment_option, users.company_name, menu.item_category FROM orders, menu, users WHERE orders.order_id = :order_id AND orders.item_id = menu.item_id AND menu.company = users.user_id ORDER BY orders.order_date DESC");
+                $view_item = $connectdb->prepare("SELECT orders.customer, orders.item_id, orders.quantity, orders.item_price, orders.company, orders.order_date, orders.order_number, orders.order_status, orders.delivery_date, orders.order_id, orders.dispense_date, menu.item_name, menu.item_foto, menu.other_foto, menu.payment_option, users.company_name, menu.item_category FROM orders, menu, users WHERE orders.order_id = :order_id AND orders.item_id = menu.item_id AND menu.company = users.user_id ORDER BY orders.order_date DESC");
                 $view_item->bindvalue('order_id', $order_id);
                 $view_item->execute();
 
@@ -348,7 +416,18 @@
         ?>
         <figure class="item_details">
             <div class="item_pics" id="history_pics">
-                <img src="<?php echo '../items/'.$item->item_foto?>" alt="<?php echo $item->item_name?>" loading="lazy">
+                <div class="slide_foto">
+                    <img class="active" src="<?php echo '../items/'.$item->item_foto?>" alt="<?php echo $item->item_name?>" loading="lazy">
+                    <img src="<?php echo '../items/'.$item->other_foto?>" alt="<?php echo $item->item_name?>" loading="lazy">
+                </div>
+                <div class="arrows">
+                    <a class="left_arrow" href="javascript:void(0)" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></a>
+                    <a class="right_arrow" href="javascript:void(0)" aria-label="Next photo"><i class="fas fa-chevron-right"></i></a>
+                </div>
+                <div class="dot_row">
+                    <button type="button" class="active" onclick="showSlide(0)" aria-label="Photo 1"></button>
+                    <button type="button" onclick="showSlide(1)" aria-label="Photo 2"></button>
+                </div>
             </div>
             <form>
                 <figcaption>
@@ -376,7 +455,7 @@
                         ?>
                         <a href="javascript:void(0)" onclick="viewItem('<?php echo $item->item_id?>')" id="track" style="background:var(--gradient)">Add review <i class="fas fa-star"></i><i class="fas fa-star"></i></a>
                         <?php }?>
-                        <p class="dm"><?php echo "<a target='_blank' href='https://wa.me/+2347055220617' title='Message Store owner'><i class='fab fa-whatsapp'></i> Send us a DM</a>";?></p>
+                        <p class="dm"><?php echo "<a target='_blank' href='https://wa.me/+2348071172386' title='Message Store owner'><i class='fab fa-whatsapp'></i> Send us a Message</a>";?></p>
                     </div>
                 </figcaption>
             </form>
@@ -410,6 +489,49 @@
         <?php endforeach; }?>
     </div>
 </section>
+
+<script>
+    (function(){
+        const slides = document.querySelectorAll('#itemContent .slide_foto img');
+        const dots = document.querySelectorAll('#itemContent .dot_row button');
+        let current = 0;
+
+        window.showSlide = function(index){
+            if(!slides.length) return;
+            current = (index + slides.length) % slides.length;
+            slides.forEach((img, i) => img.classList.toggle('active', i === current));
+            dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        };
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const supportsHover = window.matchMedia('(hover: hover)').matches;
+        let autoplayTimer = null;
+
+        function startAutoplay(){
+            if(prefersReducedMotion || slides.length < 2) return;
+            autoplayTimer = setInterval(() => showSlide(current + 1), 4000);
+        }
+
+        function restartAutoplay(){
+            if(autoplayTimer) clearInterval(autoplayTimer);
+            startAutoplay();
+        }
+
+        const left = document.querySelector('#itemContent .left_arrow');
+        const right = document.querySelector('#itemContent .right_arrow');
+        if(left) left.addEventListener('click', () => { showSlide(current - 1); restartAutoplay(); });
+        if(right) right.addEventListener('click', () => { showSlide(current + 1); restartAutoplay(); });
+        dots.forEach((d, i) => d.addEventListener('click', () => { showSlide(i); restartAutoplay(); }));
+
+        const gallery = document.querySelector('#itemContent .item_pics');
+        if(gallery && supportsHover){
+            gallery.addEventListener('mouseenter', () => autoplayTimer && clearInterval(autoplayTimer));
+            gallery.addEventListener('mouseleave', restartAutoplay);
+        }
+
+        startAutoplay();
+    })();
+</script>
         <section id="just_in">
             <?php
                  $select_featured = $connectdb->prepare("SELECT * FROM menu WHERE /* item_name != :item_name AND  */item_category LIKE '%$item->item_category%'AND item_id != :item_id ORDER BY time_created LIMIT 6");
@@ -471,7 +593,7 @@
     </footer>
     <!-- <script src="bootstrap.min.js"></script> -->
     <script src="../controller/jquery.js"></script>
-    <script src="../controller/script.js"></script>
+    <script src="../controller/script.js?v=<?php echo APP_VERSION?>"></script>
     
 </body>
 </html>

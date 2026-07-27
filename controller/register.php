@@ -82,7 +82,7 @@
                 $mail->Subject = $subject;
                 $mail->Body = $body;
                 $mail->AddAddress($to);
-                $mail->addBCC('onostarkels@gmail.com');
+                // $mail->addBCC('onostarkels@gmail.com');
                 
                 if(!$mail->Send())
                 {

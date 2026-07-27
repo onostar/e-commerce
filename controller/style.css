@@ -2035,6 +2035,7 @@ main{
     display:none;
     
 }
+/*
 #trackItem ul{
     margin:0 15px;
 }
@@ -2047,7 +2048,7 @@ main{
 }
 #trackItem ul li span, #trackItem ul li span i{
     color:rgb(153, 155, 153);
-}
+} */
 .cancel_order{
     padding: 5px;
     color:#fff;

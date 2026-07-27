@@ -1,5 +1,7 @@
 <?php
     require "../controller/server.php";
+    include "../admin/views/cache_control.php";
+
     session_start();
     $_SESSION['current_page'] = $_SERVER['REQUEST_URI'];
 
@@ -25,7 +27,8 @@
     <link rel="stylesheet" href="../fontawesome-free-5.15.1-web/css/all.css">
     <link rel="stylesheet" href="../fontawesome-free-6.0.0-web/css/all.css">
     <link rel="icon" type="image/png" href="../images/logo.png" size="32X32">
-    <link rel="stylesheet" href="../controller/style.css">
+    <link rel="stylesheet" href="../controller/style.css?v=<?php echo APP_VERSION?>">
+
     
 </head>
 <body>

@@ -64,7 +64,7 @@ if($hour >= 5 && $hour < 12){
             <div>
                 <a href="account.php" class="signupBtn">My Profile</a>
                 <a href="order_history.php" class="signupBtn">My orders</a>
-                <button id="logoutBtn"><a href="../controller/logout.php">Logout</a></button>
+               <button id="logoutBtn"><a href="../controller/logout.php" title="Sign out">Logout <i class="fas fa-sign-out"></i></a></button>
                 
             </div>
         </div>
