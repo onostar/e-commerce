@@ -28,11 +28,23 @@
             <p>&copy;<?php echo date("Y")?> Rivicos supermarket. All Rights Reserved.</p>
         </section>
     </footer>
+    <!-- call us -->
+    <div class="floating-contact">
 
-    
-    <div class="toTop">
-        <a href="#banner" title="Go to top"><i class="fas fa-chevron-up"></i></a>
+        <a href="tel:+2347055220617" class="call-btn">
+
+            <i class="fas fa-phone-alt"></i>
+
+            <span>Call Us<br><strong>0705 522 0617</strong></span>
+
+        </a>
+
     </div>
+    
+    <!-- <div class="toTop">
+        <a href="#banner" title="Go to top"><i class="fas fa-chevron-up"></i></a>
+    </div> -->
+
     <!-- check cart and display checkout button -->
     <?php
         if(isset($_SESSION['user'])){
