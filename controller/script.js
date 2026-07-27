@@ -364,10 +364,10 @@ function viewOrder(order){
     return;
 }
 /* view order details */
-function viewItem(item){
+/* function viewItem(item){
     window.open("item_review.php?item="+item, "_parent");
     return;
-}
+} */
 
 //cancel order
 function cancelOrder(order_id){

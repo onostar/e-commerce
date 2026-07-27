@@ -453,7 +453,7 @@
                         <?php
                             if($item->order_status == 2){
                         ?>
-                        <a href="javascript:void(0)" onclick="viewItem('<?php echo $item->item_id?>')" id="track" style="background:var(--gradient)">Add review <i class="fas fa-star"></i><i class="fas fa-star"></i></a>
+                        <a href="item_review.php?item=<?php echo $item->item_id?>"  id="track" style="background:var(--gradient)">Add review <i class="fas fa-star"></i><i class="fas fa-star"></i></a>
                         <?php }?>
                         <p class="dm"><?php echo "<a target='_blank' href='https://wa.me/+2347055220617' title='Message Store owner'><i class='fab fa-whatsapp'></i> Send us a Message</a>";?></p>
                     </div>

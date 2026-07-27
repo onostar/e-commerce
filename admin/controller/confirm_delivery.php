@@ -95,7 +95,7 @@
             $from = 'orders@rivicos.com';
             $from_name = "Rivicos";
             $name = 'Rivicos order delivery';
-            $subj = "✅ Delivery Confirmed - Order ".$order_id;
+            $subj = "Delivery Confirmed - Order ".$order_id;
 
             $msg='
             <div style="

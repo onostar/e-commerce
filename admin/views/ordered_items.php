@@ -20,7 +20,33 @@
         <div class="order_history">
         <?php
             $n = 1;
-            $select_order = $connectdb->prepare("SELECT shoppers.first_name, shoppers.last_name, shoppers.email, shoppers.address, shoppers.city, shoppers.phone_number, orders.order_id, orders.customer, orders.item_id, orders.quantity, orders.item_price, orders.company, orders.delivery_address, orders.order_date, orders.order_status,  menu.payment_option, menu.item_name, menu.item_foto FROM shoppers, orders, menu WHERE orders.order_number = :order_number AND orders.item_id = menu.item_id AND orders.order_status != 0 ORDER BY orders.order_date DESC");
+            $select_order = $connectdb->prepare("SELECT s.first_name, s.last_name,
+                        s.email,
+                        s.address,
+                        s.city,
+                        s.phone_number,
+                        o.order_id,
+                        o.customer,
+                        o.item_id,
+                        o.quantity,
+                        o.item_price,
+                        o.company,
+                        o.delivery_address,
+                        o.order_date,
+                        o.order_status,
+                        m.payment_option,
+                        m.item_name,
+                        m.item_foto
+                    FROM orders o
+                    INNER JOIN menu m
+                        ON o.item_id = m.item_id
+                    INNER JOIN shoppers s
+                        ON o.customer = s.user_id
+                    WHERE
+                        o.order_number = :order_number
+                        AND o.order_status != 0
+                    ORDER BY o.order_date DESC
+                    ");
             $select_order->bindValue("order_number", $invoice);
             $select_order->execute();
     if($select_order->rowCount() > 0){

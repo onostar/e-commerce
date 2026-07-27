@@ -57,7 +57,7 @@
                     <input type="hidden" name="item" id="item" value="<?php echo $item?>">
                     <input type="hidden" name="customer" id="customer" value="<?php echo $id?>">
                     <textarea name="details" id="details" placeholder="Enter your review here" cols="30" rows="10"></textarea>
-                    <button type="submit" name="add_review">Post review <i class="fas fa-plus"></i></button>
+                    <button type="submit" name="add_review">Add review <i class="fas fa-star"></i><i class="fas fa-star"></i></button>
                 </form>
             </div>
             

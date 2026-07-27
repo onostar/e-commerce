@@ -1515,11 +1515,12 @@ main{
 }
 .review_form form button{
     color:#fff;
-    background:green;
+    background:var(--buttonColor);
     border-radius: 15px;
     padding:8px;
     box-shadow: 1px 1px 1px #222;
     margin:10px 0;
+    border:1px solid #fff;
 }
 /* all items */
 /* #all_items, #recommendedItems,  */#popular{

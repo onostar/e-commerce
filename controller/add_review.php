@@ -1,5 +1,6 @@
 <?php
     session_start();
+    date_default_timezone_set("Africa/Lagos");
     require "server.php";
     require "../PHPMailer/PHPMailerAutoload.php";
     require "../PHPMailer/class.phpmailer.php";
@@ -45,7 +46,7 @@
        $get_review->execute();
        if($get_review->rowCount() > 0){
             $_SESSION['error'] = "You have already posted a review for this item";
-            header("Location: ../view/report_product.php");
+            header("Location: ../view/item_review.php?item=$item");
         }else{
             $statement = $connectdb->prepare("INSERT INTO reviews (item, customer, details, post_date) VALUES (:item, :customer, :details, :post_date)");
 
@@ -62,21 +63,21 @@
                 $mail->SMTPAuth = true; 
         
                 $mail->SMTPSecure = 'ssl'; 
-                $mail->Host = 'realcarepharmacy.com';
+                $mail->Host = 'premium355.web-hosting.com';
                 $mail->Port = 465; 
                 $mail->Username = 'admin@realcarepharmacy.com';
                 $mail->Password = 'yMcmb@her0123!';   
         
         
                 $mail->IsHTML(true);
-                $mail->From="admin@realcarepharmacy.com";
+                $mail->From="admin@rivicos.com";
                 $mail->FromName=$from_name;
                 $mail->Sender=$from;
                 $mail->AddReplyTo($from, $from_name);
                 $mail->Subject = $subject;
                 $mail->Body = $body;
                 $mail->AddAddress($to);
-                $mail->AddAddress('onostarkels@gmail.com');
+                // $mail->AddAddress('onostarkels@gmail.com');
                 if(!$mail->Send())
                 {
                     $error ="Please try Later, Error Occured while Processing...";
@@ -91,17 +92,17 @@
                     /* unlink($ssn_folder);
                     unlink($dlf_folder);
                     unlink($dlb_folder); */
-                    header("Location: ../index.php");
+                    // header("Location: ../index.php");
                     return $error;
                 }
             }
             
-            $to   = $email;
-            $from = 'admin@realcarepharmacy.com';
-            $from_name = "Realcare";
-            $name = 'Realcare customer review';
-            $subj = "Realcare review from $full_name";
-            $msg = "<p>You have a review for $item_name from $full_name<br><br> <a style='background:green;padding:10px; color:#fff' href='https://realcarepharmacy.com/item_info.php?item=$item'>View</a></p>";          
+            $to   = 'info@rivicos.com';
+            $from = 'admin@rivicos.com';
+            $from_name = "Rivicos";
+            $name = 'Rivicos customer review';
+            $subj = "Rivicos review from $full_name";
+            $msg = "<p>You have a review for $item_name from $full_name<br><br> <a style='background:green;padding:10px; color:#fff' href='https://rivicos.com/view/item_info.php?item=$item'>View</a></p>";          
             $error=smtpmailer($to, $from, $name ,$subj, $msg);
             }
             
