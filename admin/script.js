@@ -1509,6 +1509,9 @@ function addDepartment(){
               type : "POST",
               url : "../controller/add_category.php",
               data : {department:department},
+              beforeSend : function(){
+                    $(".info").html("<div class='processing'><div class='loader'></div></div>");
+                },
               success : function(response){
               $(".info").html(response);
               }
@@ -1577,6 +1580,9 @@ function addItem(){
               data: fd,
               contentType: false,
               processData: false,
+              beforeSend : function(){
+                    $(".info").html("<div class='processing'><div class='loader'></div></div>");
+                },
               success: function(response){
                    if(response != 0){
                    $(".info").html(response); 
@@ -1811,6 +1817,9 @@ function updateBanner(){
               data: fd,
               contentType: false,
               processData: false,
+              beforeSend : function(){
+                    $(".info").html("<div class='processing'><div class='loader'></div></div>");
+                },
               success: function(response){
                    if(response != 0){
                    $(".info").html(response); 
