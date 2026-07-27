@@ -365,7 +365,7 @@ function viewOrder(order){
 }
 /* view order details */
 function viewItem(item){
-    window.open("../view/item_review.php?item="+item, "_parent");
+    window.open("item_review.php?item="+item, "_parent");
     return;
 }
 

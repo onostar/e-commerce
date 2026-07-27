@@ -455,7 +455,7 @@
                         ?>
                         <a href="javascript:void(0)" onclick="viewItem('<?php echo $item->item_id?>')" id="track" style="background:var(--gradient)">Add review <i class="fas fa-star"></i><i class="fas fa-star"></i></a>
                         <?php }?>
-                        <p class="dm"><?php echo "<a target='_blank' href='https://wa.me/+2348071172386' title='Message Store owner'><i class='fab fa-whatsapp'></i> Send us a Message</a>";?></p>
+                        <p class="dm"><?php echo "<a target='_blank' href='https://wa.me/+2347055220617' title='Message Store owner'><i class='fab fa-whatsapp'></i> Send us a Message</a>";?></p>
                     </div>
                 </figcaption>
             </form>
@@ -534,7 +534,7 @@
 </script>
         <section id="just_in">
             <?php
-                 $select_featured = $connectdb->prepare("SELECT * FROM menu WHERE /* item_name != :item_name AND  */item_category LIKE '%$item->item_category%'AND item_id != :item_id ORDER BY time_created LIMIT 6");
+                 $select_featured = $connectdb->prepare("SELECT * FROM menu WHERE /* item_name != :item_name AND  */item_category LIKE '%$item->item_category%'AND item_id != :item_id ORDER BY RAND() LIMIT 5");
                  $select_featured->bindvalue("item_id", $item->item_id);
                  $select_featured->execute();
                  if($select_featured->rowCount() > 0){
@@ -547,27 +547,34 @@
                     foreach($shows as $show):
                 ?>
                 <figure>
-                    <a href="javascript:void(0);" onclick="showItems('<?php echo $show->item_id?>')">
-                        <img src="<?php echo '../items/'.$show->item_foto?>" alt="Item" loading="lazy">
+                    <a href="item_info.php?item=<?php echo $show->item_id ?>">
+                        <img src="<?php echo '../items/'.$show->item_foto?>" alt="<?php echo $show->item_name?>" loading="lazy">
 
-                    </a>
-                    <form action="../controller/cart.php" method="POST">
-                        <input type="hidden" name="cart_item_id" id="cart_item_id" value="<?php echo $show->item_id?>">
-                        <input type="hidden" name="cart_item_name" id="cart_item_name" value="<?php echo $show->item_name?>">
-                        <input type="hidden" name="cart_item_price" id="cart_item_price" value="<?php echo $show->item_prize?>">
-                        <input type="hidden" name="cart_item_restaurant" id="cart_item_restaurant" value="<?php echo $show->company?>">
-                        <input type="hidden" name="customer" id="customer" value="<?php echo $id?>">
-                        <input type="hidden" id="quantity" name="quantity" value="1">
+                    
+
+                   
                         <figcaption>
                             <div class="todo">
-                                <p class="first"><?php echo $show->item_name?></p>
-                                <p><i class="fas fa-store"></i> Realcare</p>
-                                <!-- <p><?php echo $show->item_category?></p> -->
+                                <p style="color:rgb(66, 66, 66)!important"><?php echo $show->item_name?>...</p>
+                                
                                 <span>₦ <?php echo number_format($show->item_prize)?></span>
+                                <?php if($show->item_prize < $show->previous_price){?>
+                                    <span class="previous_price">₦<?php echo number_format($show->previous_price)?></span>
+                                <?php }?>
                             </div>
-                            <button type="submit" name="add_to_cart" id="add_to_cart" title="add to cart" class="add_cart"><i class="fas fa-shopping-cart"></i></button>
+
+                            <?php
+                                if($show->item_prize < $show->previous_price){
+                            ?>
+                            <div class="percentage">
+                                <?php
+                                    $percent = (($show->previous_price - $show->item_prize) / $show->previous_price) * 100;
+                                ?>
+                                <p style="color:#2e2d2d">-<?php echo number_format($percent);?>%</p>
+                            </div>
+                            <?php }?>
                         </figcaption>
-                    </form>
+                    </a> 
                 </figure>
                 
                 <?php endforeach ?>
