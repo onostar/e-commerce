@@ -94,7 +94,7 @@
             
             $to   = $email;
             $from = 'orders@rivicos.com';
-            $from_name = "Rivicos";
+            $from_name = "Rivicos Supermarket";
             $name = 'Rivicos order';
            $subj = "Your Order is On Its Way! - ".$order_id;
             $msg='
@@ -273,6 +273,7 @@
             ';
             
             $error=smtpmailer($to, $from, $name ,$subj, $msg);
+            echo "<div class='success'><p>Order Dispensed Successfully! <i class='fas fa-thumbs-up'></i></p></div>";
         }else{
             $_SESSION['error'] = "failed to dispense";
             header("Location: ../views/admin.php");

@@ -36,7 +36,7 @@
                         <label for="item_price">Item Price (NGN)</label>
                         <input type="text" name="item_price" id="item_price">
                     </div>
-                    <input type="hidden" name="payment_option" id="payment_option" value="Full pyment">
+                    <input type="hidden" name="payment_option" id="payment_option" value="Full payment">
                     <!-- <div class="data">
                         <label for="payment_option">Payment Options</label>
                         <select name="payment_option" id="payment_option" required>

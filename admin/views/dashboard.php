@@ -5,7 +5,7 @@
                 <p><i class="fas fa-coins"></i> Daily Revenue</p>
                 <p>
                 <?php
-                    $get_revenue = $connectdb->prepare("SELECT SUM(quantity * item_price) as total FROM orders WHERE order_status != 0 AND order_status != -1 AND date(dispense_date) = CURDATE()");
+                    $get_revenue = $connectdb->prepare("SELECT SUM(quantity * item_price) as total FROM orders WHERE order_status != -1 AND date(order_date) = CURDATE()");
                     $get_revenue->execute();
                     $rows = $get_revenue->fetchAll();
                     foreach($rows as $row){
@@ -71,7 +71,7 @@
     
     <div class="daily_monthly">
         <div class="daily_report allResults">
-            <h3>Daily Encounters</h3>
+            <h3>Daily Orders</h3>
             <table>
                 <thead style="background:var(--buttonColor)">
                     <tr>
@@ -82,7 +82,7 @@
                     </tr>
                 </thead>
                 <?php
-                    $get_daily = $connectdb->prepare("SELECT COUNT(order_id) AS customers, SUM(item_price * quantity) AS revenue, dispense_date FROM orders WHERE company = :company AND Order_status != 0 AND order_status != -1 GROUP BY date(dispense_date) ORDER BY order_date DESC");
+                    $get_daily = $connectdb->prepare("SELECT COUNT(order_id) AS customers, SUM(item_price * quantity) AS revenue, order_date FROM orders WHERE company = :company AND order_status != -1 GROUP BY date(order_date) ORDER BY order_date DESC");
                     $get_daily->bindvalue("company", $user->user_id);
                     $get_daily->execute();
                         $n = 1;
@@ -93,7 +93,7 @@
                 <tbody>
                     <tr>
                         <td style="text-align:center; color:red"><?php echo $n?></td>
-                        <td style="color:var(--moreColor)"><?php echo date("d-M-Y",strtotime($daily->dispense_date))?></td>
+                        <td style="color:var(--moreColor)"><?php echo date("d-M-Y",strtotime($daily->order_date))?></td>
                         <td style="text-align:center"><?php echo $daily->customers?></td>
                         <td style="color:red"><?php echo "₦".number_format($daily->revenue)?></td>
                     </tr>
@@ -110,7 +110,7 @@
             ?>
         </div>
         <div class="monthly_report allResults">
-            <h3 style="border-radius:20px 20px 0 0;">Monthly Reports</h3>
+            <h3 style="border-radius:20px 20px 0 0;">Monthly Order Reports</h3>
             <table>
                 <thead style="background:var(--buttonColor)">
                     <tr>
@@ -122,7 +122,7 @@
                     </tr>
                 </thead>
                 <?php
-                    $get_monthly = $connectdb->prepare("SELECT COUNT(order_id) AS customers, SUM(item_price * quantity) AS revenue, dispense_date, COUNT(dispense_date) AS deliveries, COUNT(DISTINCT dispense_date) AS daily_average FROM orders WHERE company = :company AND order_status != 0 AND order_status != -1 GROUP BY MONTH(dispense_date) ORDER BY order_date DESC");
+                    $get_monthly = $connectdb->prepare("SELECT COUNT(order_id) AS customers, SUM(item_price * quantity) AS revenue, order_date, COUNT(order_date) AS deliveries, COUNT(DISTINCT order_date) AS daily_average FROM orders WHERE company = :company  AND order_status != -1 GROUP BY MONTH(order_date), YEAR(order_date) ORDER BY YEAR(order_date), MONTH(order_date) DESC");
                     $get_monthly->bindvalue("company", $user->user_id);
                     $get_monthly->execute();
                     $n = 1;
@@ -133,7 +133,7 @@
                 <tbody>
                     <tr>
                         <td style="text-align:center; color:red"><?php echo $n?></td>
-                        <td><?php echo date("M, Y", strtotime($monthly->dispense_date))?></td>
+                        <td><?php echo date("M, Y", strtotime($monthly->order_date))?></td>
                         <td style="text-align:center"><?php echo $monthly->customers?></td>
                         <td><?php echo "₦".number_format($monthly->revenue)?></td>
                         <td style="color:red"><?php

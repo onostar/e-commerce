@@ -652,14 +652,14 @@ function declineGuest(user_id){
     }
 }
 /* dispense item for admin */
-function dispenseItem(order_id){
+/* function dispenseItem(order_id){
     let dispense = confirm("Are you sure you want to Dispense this item?", "");
     if(dispense){
         window.open("../controller/dispense_item.php?dispense="+order_id, "_parent");
         return;
     }
     
-}
+} */
 /* deactivate item */
 function disableItem(item){
     let disable = confirm("Do you want to disable this item?");
@@ -1657,14 +1657,17 @@ function dispenseItem(order, invoice){
         $.ajax({
             type : "GET",
             url : "../controller/dispense_item.php?order="+order,
+            beforeSend : function(){
+                $("#sales_details").html("<div class='processing'><div class='loader'></div></div>");
+            },
             success : function(response){
                 $("#sales_details").html(response);
-            }
+                setTimeout(function(){
+                    showPage("order_details.php?order="+invoice);
+                }, 2000)
+            },
         })
-        setTimeout(function(){
-            $("#sales_details").load("order_details.php?order="+invoice+ "#sales_details");
-        }, 1000)
-        return false;
+        
     }
 }
 //cancel single order
@@ -1674,13 +1677,17 @@ function cancelOrder(order, invoice){
         $.ajax({
             type : "GET",
             url : "../controller/cancel_order.php?order="+order,
+            beforeSend : function(){
+                $("#sales_details").html("<div class='processing'><div class='loader'></div></div>");
+            },
             success : function(response){
                 $("#sales_details").html(response);
-            }
+                setTimeout(function(){
+                    showPage("order_details.php?order="+invoice);
+                }, 2000)
+            },
         })
-        setTimeout(function(){
-            $("#sales_details").load("order_details.php?order="+invoice+ "#sales_details");
-        }, 1000)
+        
         return false;
     }
 }
@@ -1691,13 +1698,17 @@ function dispenseAll(invoice){
         $.ajax({
             type : "GET",
             url : "../controller/dispense_all.php?order="+invoice,
+           beforeSend : function(){
+                $("#sales_details").html("<div class='processing'><div class='loader'></div></div>");
+            },
             success : function(response){
                 $("#sales_details").html(response);
-            }
+                setTimeout(function(){
+                    showPage("order_details.php?order="+invoice);
+                }, 2000)
+            },
         })
-        setTimeout(function(){
-            $("#sales_details").load("order_details.php?order="+invoice+ "#sales_details");
-        }, 3000)
+        
         return false;
     }
 }
@@ -1709,13 +1720,17 @@ function cancelAllOrders(invoice){
         $.ajax({
             type : "GET",
             url : "../controller/cancel_all.php?order="+invoice,
+            beforeSend : function(){
+                $("#sales_details").html("<div class='processing'><div class='loader'></div></div>");
+            },
             success : function(response){
                 $("#sales_details").html(response);
-            }
+                setTimeout(function(){
+                    showPage("order_details.php?order="+invoice);
+                }, 2000)
+            },
         })
-        setTimeout(function(){
-            $("#sales_details").load("order_details.php?order="+invoice+ "#sales_details");
-        }, 1000)
+       
         return false;
     }
 }
@@ -1755,6 +1770,9 @@ function search(url){
               type: "POST",
               url: "../controller/"+url,
               data: {from_date:from_date, to_date:to_date},
+               beforeSend : function(){
+                $(".new_data").html("<div class='processing'><div class='loader'></div></div>");
+            },
               success: function(response){
               $(".new_data").html(response);
               }

@@ -4,7 +4,7 @@
     $to = htmlspecialchars(stripslashes($_POST['to_date']));
 
 
-    $select_order = $connectdb->prepare("SELECT shoppers.first_name, shoppers.last_name, shoppers.phone_number, orders.order_id, orders.customer, orders.item_id, orders.order_number, orders.order_date, orders.order_status, orders.quantity, orders.item_price, orders.quantity, menu.item_name FROM shoppers, orders, menu WHERE shoppers.user_id = orders.customer AND orders.item_id = menu.item_id AND orders.order_status != 0 AND orders.order_status != -1 AND date(orders.dispense_date) BETWEEN '$from' AND '$to' ORDER BY orders.dispense_date DESC");
+    $select_order = $connectdb->prepare("SELECT shoppers.first_name, shoppers.last_name, shoppers.phone_number, orders.order_id, orders.customer, orders.item_id, orders.order_number, orders.order_date, orders.order_status, orders.quantity, orders.item_price, orders.quantity, menu.item_name FROM shoppers, orders, menu WHERE shoppers.user_id = orders.customer AND orders.item_id = menu.item_id AND orders.order_status != -1 AND date(orders.order_date) BETWEEN '$from' AND '$to' ORDER BY orders.order_date DESC");
     $select_order->execute();
     $rows = $select_order->fetchAll();
     $n = 1;
@@ -27,7 +27,7 @@
                 <td>Amount</td>
                 <td>Date</td>
                 <td>Time</td>
-                <!-- <td></td> -->
+                <td>Status</td>
                 </tr>
             </thead>
         <tbody>
@@ -54,6 +54,17 @@
                     </td>
                     <td><?php echo date("d-m-Y", strtotime($row->order_date))?></td>
                     <td><?php echo date("h:ia", strtotime($row->order_date))?></td>
+                    <td>
+                        <?php
+                            if($row->order_status == 0){
+                        ?>
+                        <p style="color:var(--primaryColor);"><i class="fas fa-spinner"></i> Processing</p>
+                        <?php }elseif($row->order_status == 1){?>
+                        <p style="color:var(--newColor);"><i class="fas fa-truck"></i> Shipped</p>
+                        <?php }else{?>
+                        <p style="color:green;"><i class="fas fa-check-square"></i> Delivered</p>
+                        <?php }?>
+                    </td>
                 </tr>
             <?php $n++; }}?>
         </tbody>
@@ -65,7 +76,7 @@
     };
     if($select_order->rowCount() > 0){
         // get sum
-        $get_total = $connectdb->prepare("SELECT SUM(item_price * quantity) AS total FROM orders WHERE date(dispense_date)BETWEEN '$from' AND '$to'");
+        $get_total = $connectdb->prepare("SELECT SUM(item_price * quantity) AS total FROM orders WHERE date(order_date)BETWEEN '$from' AND '$to'");
         $get_total->execute();
         $amounts = $get_total->fetchAll();
         

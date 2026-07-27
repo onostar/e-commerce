@@ -73,11 +73,14 @@
                     <?php }?>
                 </div>
             </div>
+            
             <div class="amount_due" id="due_bill" style="width:100%;">
+                <?php if($select_order->rowCount() > 1){?>
                 <div class="add_bill">
                     <a href="javascript:void(0)" title="Dispense all items" onclick="dispenseAll('<?php echo $invoice?>')" style="background:var(--newColor)">Dispense all <i class="fas fa-check-double"></i></a>
                     <a href="javascript:void(0)" title="Add order to bill" onclick="cancelAllOrders('<?php echo $invoice?>')" style="background:brown"> Cancel all <i class="fas fa-trash"></i></a>
                 </div>
+                <?php }?>
                 <h2>Total Amount: 
                 <?php
                     //get total amount

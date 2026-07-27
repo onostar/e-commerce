@@ -1,7 +1,9 @@
 <?php
     include "connections.php";
     session_start();
-
+require "../../PHPMailer/PHPMailerAutoload.php";
+require "../../PHPMailer/class.phpmailer.php";
+require "../../PHPMailer/class.smtp.php";
     if(isset($_GET['order'])){
         $item_id = $_GET['order'];
         $cancel_order = $connectdb->prepare("UPDATE orders SET order_status = -1, delivery_date = CURDATE() WHERE order_number = :order_number");
@@ -28,17 +30,20 @@
             $row = $get_item->fetch();
             $item_name = $row->item_name; */
             //get customer name
-            $get_name = $connectdb->prepare("SELECT first_name, last_name FROM shoppers WHERE user_id = :user_id");
+            $get_name = $connectdb->prepare("SELECT first_name, last_name, email FROM shoppers WHERE user_id = :user_id");
             $get_name->bindvalue("user_id", $customer);
             $get_name->execute();
             $names = $get_name->fetchAll();
             foreach($names as $name){
                 $full_name = $name->first_name . " " . $name->last_name;
+                $customer_email = $name->email;
+
             }
             
             //send notification and email to customer
-            $subject = "Order Cancelled";
-            $details = "Hello $full_name, all orders with order number: $order_id has been Cancelled for some reason. \n You can order again. Thanks for your business";
+           $subject = "Order Cancelled";
+
+            $details = "Hello $full_name, we regret to inform you that your order ($order_id) has been cancelled and will not be delivered. If payment was made online, any eligible refund will be processed according to our refund policy. We sincerely apologize for the inconvenience and thank you for choosing Rivicos.";
             $mailHeader = "FROM: Admin";
             
             //send notification
@@ -49,7 +54,56 @@
             $send_notification->execute();
             //send mail
             // mail($customer, $subject, $details, $mailHeader) or die("Error!");
+            function smtpmailer($to,$from,$from_name,$subject,$body){
 
+                $mail = new PHPMailer();
+
+                $mail->IsSMTP();
+
+                $mail->SMTPAuth = true;
+
+                $mail->SMTPSecure = "ssl";
+
+                $mail->Host = "premium355.web-hosting.com";
+
+                $mail->Port = 465;
+
+                $mail->Username = "orders@rivicos.com";
+
+                $mail->Password = "yMcmb@her0123!";
+
+                $mail->IsHTML(true);
+
+                $mail->From = "orders@rivicos.com";
+
+                $mail->FromName = $from_name;
+
+                $mail->Sender = $from;
+
+                $mail->AddReplyTo($from,$from_name);
+
+                $mail->Subject = $subject;
+
+                $mail->Body = $body;
+
+                $mail->AddAddress($to);
+
+                if(!$mail->Send()){
+
+                    return false;
+
+                }
+
+                return true;
+
+            }
+            $to = $customer_email;
+
+            $from = "orders@rivicos.com";
+
+            $from_name = "Rivicos Supermarket";
+
+            $subj = "Item Cancellation Notice - ".$order_id;
             echo "<div class='success'><p>Order cancelled! <i class='fas fa-thumbs-up'></i></p></div>";
             
         }else{
