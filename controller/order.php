@@ -164,7 +164,7 @@
             $subj = 'New order from '.$customer_name;
             $msg = "<p>You have a new order from $customer_name </p><br> <a href='https://rivicos.com/login_page.php'>Click</a> to review and deliver order"; */
             /* Mail sent to admin */
-            $subj = "🛒 New Order Received - ".$order_num;
+            $subj = "New Order Received - ".$order_num;
 
             $msg='
             <div style="max-width:700px;
@@ -267,7 +267,7 @@
 
             ';
             /* mail to send to customer */
-            $customerSubject="🎉 Order Confirmation - ".$order_num;
+            $customerSubject="Order Confirmation - ".$order_num;
             $customerMessage='
             <div style="max-width:700px;
             margin:auto;
