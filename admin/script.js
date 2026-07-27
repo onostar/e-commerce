@@ -1545,10 +1545,10 @@ function addItem(){
          alert("Please enter item price");
          $("#item_price").focus();
          return;
-    }else if(payment_option.length == 0 || payment_option.replace(/^\s+|\s+$/g, "").length == 0){
+    /* }else if(payment_option.length == 0 || payment_option.replace(/^\s+|\s+$/g, "").length == 0){
          alert("Please select payment option");
          $("#payment_option").focus();
-         return;
+         return; */
     }else if(delivery_time.length == 0 || delivery_time.replace(/^\s+|\s+$/g, "").length == 0){
          alert("Please select Delivery time frame");
          $("#delivery_time").focus();
