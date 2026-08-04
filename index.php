@@ -589,7 +589,7 @@ if($hour >= 5 && $hour < 12){
                 <?php endforeach ?>
                 
             </div>
-            <?php if($select_featured->rowCount() > 9){?>
+            <?php if($select_featured->rowCount() > 20){?>
             <div class="more_mobile">
                 <a href="view/all_items.php">View More Products <i class="fas fa-cloud-download"></i></a>
             </div>

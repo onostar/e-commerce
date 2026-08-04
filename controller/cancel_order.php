@@ -133,7 +133,7 @@
                 $mail->Subject = $subject;
                 $mail->Body = $body;
                 $mail->AddAddress($to);
-                $mail->AddAddress('onostarkels@gmail.com');
+                // $mail->AddAddress('onostarkels@gmail.com');
                 
                 if(!$mail->Send())
                 {
@@ -152,7 +152,7 @@
                 }
             }
             
-            $to   = $seller_mail;
+            $to   = 'rpharmacyandsupermarket@gmail.com';
             $from = 'orders@rivicos.com';
             $from_name = "Rivicos";
             $name = 'Rivicos Cancelled Order';

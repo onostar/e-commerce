@@ -462,7 +462,7 @@
             ';
             // Admin
             smtpmailer(
-                "info@rivicos.com",
+                "rpharmacyandsupermarket@gmail.com",
                 "orders@rivicos.com",
                 "Rivicos",
                 $subj,
